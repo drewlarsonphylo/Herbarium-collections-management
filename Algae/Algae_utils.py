@@ -2,7 +2,7 @@
 #Defining a function that checks if an image name is legitimate. It takes a string (the file name) and returns True or False
 def verify_algae_name_legitimate(filename):
 	import re
-	acceptable_codes=["E","G","T","P","S"]
+	acceptable_codes=["E","T","P","S"]
 	if " " in filename: #This are all the criteria that we are checking for that cause the name to fail. Starting with if it has a space
 		return False
 	elif ")" in filename: #There can't be any parathenses is the file name
@@ -115,3 +115,43 @@ def find_appropriate_algae_archive_for_algae_file(filename): #Takes in an algae 
 		print("Attempted to find appropriate folder for an invalid file: "+filename+"   Please fix this and try again")
 		exit(1)
 		
+def terminal_input_file_extension_include_dot(): #Takes no arguments, asks user for input then returns the extension the user has requested
+												 #Automatically can determine if user is running python 2 or 3
+	import sys
+	if sys.version_info[0]==3: #Means user is running the script with python3
+		extension=input("Please type the type file extension you would like to file now including the 'dot' (e.g.  .dng .CR2  .jpeg) followed by enter:  ")
+		print("You have selected to file: "+extension)
+		check=input("If "+extension+" is correct type 'Yes' and then enter, if it is not correct, type anything else and then enter:   ")
+		if check !="Yes":
+			print("Please verify which type of files you want to process and re-run using that extension")
+			exit(0)
+		else:
+			#Checking to make sure a dot is the first character that was input
+			if extension[0]!=".":
+				print(extension+" does not appear to be a valid extension, did you include the '.'?")
+				exit(1)
+			else:
+				return extension
+	elif sys.version_info[0]==2: #Means user is running the script with python2
+		extension=raw_input("Please type the type file extension you would like to file now including the 'dot' (e.g.  .dng .CR2  .jpeg) followed by enter:  ")
+		print("You have selected to file: "+extension)
+		check=raw_input("If "+extension+" is correct type 'Yes' and then enter, if it is not correct, type anything else and then enter:   ")
+		if check !="Yes":
+			print("Please verify which type of files you want to process and re-run using that extension")
+			exit(0)
+		else:
+			#Checking to make sure a dot is the first character that was input
+			if extension[0]!=".":
+				print(extension+" does not appear to be a valid extension, did you include the '.'?")
+				exit(1)
+			else:
+				return extension	
+	else:
+		print("There was an error in determining which version of python is running, exiting")
+		exit(1)
+
+def validate_file_extension_matches(filename,extension): #Give the function a filename and an extension (including dot). Returns true if they match and False if they do not match
+	if filename[-len(extension):] == extension:
+		return True
+	else:
+		return False
