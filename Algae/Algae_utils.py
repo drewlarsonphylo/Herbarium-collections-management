@@ -5,6 +5,8 @@ def verify_algae_name_legitimate(filename):
 	acceptable_codes=["E","T","P","S"]
 	if " " in filename: #This are all the criteria that we are checking for that cause the name to fail. Starting with if it has a space
 		return False
+	elif len(re.findall("-",filename))!=2: #There needs to be exactly two -s in the file name MICH-A-, but there should't be any others
+		return False
 	elif ")" in filename: #There can't be any parathenses is the file name
 		return False
 	elif "(" in filename: #There can't be any parathenses is the file name
@@ -155,3 +157,27 @@ def validate_file_extension_matches(filename,extension): #Give the function a fi
 		return True
 	else:
 		return False
+
+def verify_algae_file_extension(filename, which_extension):
+	#Split the filename based on periods. The last one should be the file extension. If there are no periods, the file fails the test.
+	if "." in filename:
+		if filename.split(".")[-1] != which_extension:
+			returnvalue=False
+		else:
+			returnvalue=True #If it doesn't fail an extension test, this program should return True
+	else:
+		returnvalue=False	
+	return returnvalue
+	
+def find_algae_image_archive_dirs_no_library(): #Returns a dictionary containing all the vaild image algae archive folders in the directory from which the script is run
+	import os,re
+	allfiles=os.listdir(".")#Generates a list of all files in the main dir
+	Image_dirs={}#Initalize a dict to store names of image dirs
+	for j in allfiles:#Parse through the list and find which are algae dirs
+		if len(re.findall("[0-9]{6,7}",j))==2: #There needs to be two chucks of digits in the folder name
+			lenfirst=len(re.findall("[0-9]{6,7}",j)[0])
+			lensecond=len(re.findall("[0-9]{6,7}",j)[1])
+			if lenfirst==lensecond:
+				if len(j)==lenfirst+len(" - ")+lensecond: #Adding an additonal check that it cant have anything other than those two chuncks of digits and the dash
+					Image_dirs[j]=j#If it has the correct format, add the dir name to the dict that stores the names of the image dirs
+	return Image_dirs
