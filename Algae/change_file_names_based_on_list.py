@@ -22,7 +22,7 @@ from Algae_utils import validate_file_extension_matches
 run_as_test=True
 ext=".CR2" #Setting the  extension you want to have. Include the period
 #inputfile="NameChanges.csv"
-inputfile="../Name-examples.csv"
+inputfile="Name-examples.csv"
 outputfile="Change_name_report.txt"
 prefix="MICH-A-" #Specify here what comes before the barcodes. 
 delete_file="Deleted" #The notation used to specify which files should be deleted in the csv
