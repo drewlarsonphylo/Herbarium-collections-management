@@ -2,7 +2,7 @@
 #It reports the number of hits and the file paths for each hit
 
 
-# The target list can be either a list of 7 digit barcodes in which case hits will be any file in the archive with that barcode
+# The target list can be either a list of 6 or 7 digit barcodes in which case hits will be any file in the archive with that barcode
 # or the target list can  be a list of complete file names you are searching for, in which case hits will be only files in archives with that exact name
 # to force searching only for complete file names use the option require_targets_to_be_valid_complete_filenames
 
