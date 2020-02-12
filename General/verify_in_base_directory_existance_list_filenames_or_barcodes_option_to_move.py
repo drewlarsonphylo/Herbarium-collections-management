@@ -134,7 +134,7 @@ if __name__ == "__main__":
 					out.write(output_line_format)
 	
 	print("\nscript completed")
-	print ("A csv of target hits was printed to",output_filename)
+	print("A csv of target hits was printed to",output_filename)
 	if move_image_hits==True:
-		print ("Images of target hits were moved to the folder", move_image_directory)
+		print("Images of target hits were moved to the folder", move_image_directory)
 	

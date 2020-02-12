@@ -9,10 +9,10 @@ import os,re
 basedir=os.getcwd()
 #Checking os_type based on os.getcwd() and automatically setting it
 if "\\" in basedir: #This is indicitive of Windows path names
-	print "Using Windows path names"
+	print("Using Windows path names")
 	slash="\\"
 elif "/" in basedir: #This is indicitive of Linux or Mac
-	print "Using Mac path names"
+	print("Using Mac path names")
 	os_type="mac"
 	slash="/"
 
@@ -35,12 +35,12 @@ with open(output_file,"w+") as out:
 			
 			if fil != newname: #These aren't the same if the file needs to be renamed
 				if only_test!=True:
-					print "renaming",folder+slash+fil,"to",folder+slash+newname #Printing what is happening to the screen
+					print("renaming",folder+slash+fil,"to",folder+slash+newname) #Printing what is happening to the screen
 					os.rename(folder+slash+fil,folder+slash+newname) #Actually doing the rename
 					out.write(folder+slash+fil+","+folder+slash+newname+"\n") #Writing the old and new file name to the output file
 					
 				elif only_test == True:
-					print "will rename",folder+slash+fil,"to",folder+slash+newname #Printing what would have been moved to the screen
+					print("will rename",folder+slash+fil,"to",folder+slash+newname) #Printing what would have been moved to the screen
 					
 				
 	

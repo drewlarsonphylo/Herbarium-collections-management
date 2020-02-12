@@ -41,10 +41,10 @@ basedir=os.getcwd()
 
 #Checking os_type based on os.getcwd() and automatically setting it
 if "\\" in basedir: #This is indicitive of Windows path names
-	print "Using Windows path names"
+	print("Using Windows path names")
 	os_type="windows"
 elif "/" in basedir: #This is indicitive of Linux  or Mac
-	print "Using Mac path names"
+	print("Using Mac path names")
 	os_type="mac"
 
 
@@ -66,11 +66,11 @@ with open(inputTargetPath,"r") as tar:
 		
 		#Checking if the barcode is formatted correctly (A string of seven digits only)
 		if len(re.findall("[0-9]{7}",barcode))!=1:
-			print "Error, target file contains information other than a list of seven digit barcodes. Writing the offending barcode to 'errors.txt':",barcode
+			print("Error, target file contains information other than a list of seven digit barcodes. Writing the offending barcode to 'errors.txt':",barcode)
 			with open("errors.txt","a+") as err:
 					err.write(barcode+"\n")
 		elif len(barcode)!=7:
-			print "Error, target file contains information other than a list of seven digit barcodes. Writing the offending barcode to 'errors.txt':",barcode
+			print("Error, target file contains information other than a list of seven digit barcodes. Writing the offending barcode to 'errors.txt':",barcode_
 			with open("errors.txt","a+") as err:
 					err.write(barcode+"\n")
 				
@@ -91,7 +91,7 @@ for j in allfiles:#Parse through the list and find which are image dirs
 #If user requested a header to the output file, output that here
 if header==True:
 	head="Target,Match/no match, Number of matches,Filenames\n"
-	print "\n"+head.strip()
+	print("\n"+head.strip())
 	with open(output_filename,"a+") as out:
 		out.write(head)
 
@@ -129,7 +129,7 @@ for i in targets:#Iterates though all the targets
 						list_of_output_for_target[output_entry]=output_entry #With either path name length, store the entry to count up later
 					
 					else:
-						print 'You appear to have mis-specified os_type, please specify either "mac" or "windows" and try again'
+						print('You appear to have mis-specified os_type, please specify either "mac" or "windows" and try again')
 						exit(1)
 
 
@@ -149,7 +149,7 @@ for i in targets:#Iterates though all the targets
 			
 			
 		output_line_format+="\n"#Add a tailing newline after all the paths have been added
-		print output_line_format.strip()#not necessary
+		print(output_line_format.strip())#not necessary
 		
 		with open (output_filename,"a+") as out:#Opens the output file to append more data
 				out.write(output_line_format)			
@@ -158,12 +158,12 @@ for i in targets:#Iterates though all the targets
 
 	if match==0:
 		output_line_format=str(i)+","+str("no match")+","+str(num_matches)+"\n"
-		print output_line_format.strip()#not necessary
+		print(output_line_format.strip())#not necessary
 		with open (output_filename,"a+") as out:#Opens the output file to append more data
 				out.write(output_line_format)
 
 	
-print "\nscript completed"
-print "A csv of target hits was printed to",output_filename
+print("\nscript completed")
+print("A csv of target hits was printed to",output_filename)
 if copy_image_hits==True:
-	print "Images of target hits were copied to the folder",copy_image_directory
+	print("Images of target hits were copied to the folder",copy_image_directory)

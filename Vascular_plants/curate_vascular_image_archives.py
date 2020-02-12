@@ -25,11 +25,11 @@ if __name__ == "__main__":
 		
 		#Checking os_type based on os.getcwd() and automatically setting it
 		if "\\" in basedir: #This is indicitive of Windows path names
-			print "Using Windows path names"
+			print("Using Windows path names")
 			os_type="windows"
 			slash="\\"
 		elif "/" in basedir: #This is indicitive of Linux or Mac
-			print "Using Mac path names"
+			print("Using Mac path names")
 			os_type="mac"
 			slash="/"
 			
@@ -37,17 +37,15 @@ if __name__ == "__main__":
 		#Idenifying which directories in the base directory are legitimate image archive folders
 		archive_dirs={}
 		files_in_basedir=os.listdir(basedir)
-		#print files_in_basedir
 		for i in files_in_basedir:
 			if os.path.isdir(i)==True: #If the item is a directory
 				#Check if it is properly formated as a UMICH vascular plant image archive. Thats like: 1234567 - 1234567
 				if len(re.findall("[0-9]{7}\ \-\ [0-9]{7}",i))==1: #Checks if it has the right format to be an image archive folder
-		#			print i,"<<< This is being treated as an archive"
 					archive_dirs[i]=i #If the folder is an archive, add it to the dictionary of archives
 				else:
-					print i,"<<< This directory doesn't appear to be an archive and will not be curated"
+					print(i,"<<< This directory doesn't appear to be an archive and will not be curated")
 					
-		print "\n"
+		print("\n")
 			
 			
 			
@@ -58,19 +56,19 @@ if __name__ == "__main__":
 	
 				if verify_name_legitimate(name)==False:
 					statement="File name improperly formatted"
-					print statement+": "+name+" in directory "+direc+slash
+					print(statement+": "+name+" in directory "+direc+slash)
 					out.write(name+","+direc+slash+","+statement+"\n")
 				
 				if verify_file_extension(name,which_extension)==False:
 					statement="File has incorrect extension"
-					print statement+": "+name+" in directory "+direc+slash
+					print(statement+": "+name+" in directory "+direc+slash)
 					out.write(name+","+direc+slash+","+statement+"\n")
 					
 				
 				#While doing that, for every file, add the name to a giant dict with all the names in it, checking if it's already in there. Report if it is, add it if it's not, note errors in the output file
 				if name in all_filenames_master_dict:
 					statement="File is duplicated in multiple folders"
-					print statement+": "+name+" in both "+direc+slash+" and "+all_filenames_master_dict[name]+slash
+					print(statement+": "+name+" in both "+direc+slash+" and "+all_filenames_master_dict[name]+slash)
 					out.write(name+","+"both "+direc+slash+" & "+all_filenames_master_dict[name]+slash+","+statement+"\n")
 				else:
 					all_filenames_master_dict[name]=direc #Adding the file name to the dict
@@ -79,15 +77,15 @@ if __name__ == "__main__":
 				
 		#Iterate through all the image archives and check if any of the images are clearly in the wrong folder, note errors in the output file
 		for direc in archive_dirs:
-			print "\n",direc
+			print("\n",direc)
 			for name in os.listdir(direc):
 				name_strip_prefix=name.strip("MICH-V-") #Strips off the MICH-V- if it is there, and does nothing it it isn't there.
 				if name_strip_prefix[:3] != direc[:3]: #If the first 3 digits of the image barcode and folder don't match, report a mis-filing
 					statement = "File suspected to be misfiled"
-					print statement+": "+name+" in directory: "+direc+slash
+					print(statement+": "+name+" in directory: "+direc+slash)
 					out.write(name+","+direc+","+statement+"\n")
 		
 		
-		print "\nscript finished"
+		print("\nscript finished")
 		
 	
