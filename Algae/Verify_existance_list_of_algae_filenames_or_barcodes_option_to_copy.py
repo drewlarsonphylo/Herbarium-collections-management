@@ -150,14 +150,14 @@ if __name__ == "__main__":
 			output_line_format+="\n"#Add a tailing newline after all the paths have been added
 			print(output_line_format.strip())#not necessary
 			
-			with open (output_filename,"a+") as out:#Opens the output file to append more data
+			with open(output_filename,"a+") as out:#Opens the output file to append more data
 					out.write(output_line_format)			
 			
 		if match==0:
 			output_line_format=str(x)+","+str("no match")+","+str(num_matches)+"\n"
 			print(output_line_format.strip())#not necessary
 			with open (output_filename,"a+") as out:#Opens the output file to append more data
-					out.write(output_line_format)
+					out.write(output_line_format) 
 	
 	print("\nscript completed")
 	print("A csv of target hits was printed to",output_filename)

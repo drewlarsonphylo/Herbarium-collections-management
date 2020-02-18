@@ -6,7 +6,7 @@
 ext=".dng" #file extension you want to process, if blank you will be asked to provide this information in the command prompt
 output_file="Algae_filing_report.csv" #Name out the output file that will be generated
 errors="Errors.txt" #Name of the error script that will be output
-only_test=False # True or False. If not set to False, this script will run, but will not create any folders or move any files. The outout file will still be created
+only_test=True # True or False. If not set to False, this script will run, but will not create any folders or move any files. The outout file will still be created
 duplicate_type_images=True #If true, the script will generate a folder called 'Duplicated_type_specimens' in the base directory, and copy all valid algae file names that have a *_T* in them
 
 	

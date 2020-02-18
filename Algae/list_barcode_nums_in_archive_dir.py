@@ -4,7 +4,7 @@ output_file_name="file_list.csv"
 
 import os,re
 
-basedir-os.getcwd()
+basedir=os.getcwd()
 
 file_list=os.listdir(basedir)
 
