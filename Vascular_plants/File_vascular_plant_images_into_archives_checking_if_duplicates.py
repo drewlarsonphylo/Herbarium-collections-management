@@ -70,7 +70,7 @@ if __name__ == "__main__":
 						
 						elif enable_reading_metadata != True:
 						#Report for duplicated file if metadata is turned off, file is duplicated
-							statement=item +"\t"+ name_strip_prefix[:7] +",\t"+ "no" +"\t"+ "no" +"\t"+ proper_loc +"\t"+ "Duplicated in library folder: "+dup+ +"\t" +"\t" +"\n"
+							statement=item +"\t"+ name_strip_prefix[:7] +",\t"+ "no" +"\t"+ "no" +"\t"+ proper_loc +"\t"+ "Duplicated in library folder: "+dup+"\t" +"\t" +"\n"
 						out.write(statement)#Writing for a duplicated image no matter what else
 					
 				
@@ -84,6 +84,7 @@ if __name__ == "__main__":
 						statement=item +"\t"+ name_strip_prefix[:7] +",\t"+ "yes" +"\t"+ "no" +"\t"+ proper_loc +"\t"+ "yes but now overwritten" +"\t" +"\t" +"\n"
 						print("Overwriting",proper_loc+slash+item)
 						if only_test==False:
+							os.remove(proper_loc+slash+item)s
 							os.rename(item,proper_loc+slash+item) #Overwriting
 					#!!!!!!!
 					
