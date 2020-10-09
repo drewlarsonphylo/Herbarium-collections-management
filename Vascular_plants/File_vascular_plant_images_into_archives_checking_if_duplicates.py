@@ -3,7 +3,7 @@
 #Adding a function Feb 4, 2020 where it will also check if a library format folder contains a copy of the image and won't file it if a copy already exists in those either. 
 
 #User settings
-only_test=True #When set to true, no files will be moved, when False files will be moved to their filing locations
+only_test=False #When set to true, no files will be moved, when False files will be moved to their filing locations
 enable_reading_metadata=False #will do nothing if overwrite is set to True;  Requires the program Exifread 2.1.2 to be installed on the machine. Allows outputing the image creation date for duplicated files
 image_extension=".dng" #Include a period for the file extension
 output_file="Record_of_images_filed.tsv"
@@ -84,7 +84,7 @@ if __name__ == "__main__":
 						statement=item +"\t"+ name_strip_prefix[:7] +",\t"+ "yes" +"\t"+ "no" +"\t"+ proper_loc +"\t"+ "yes but now overwritten" +"\t" +"\t" +"\n"
 						print("Overwriting",proper_loc+slash+item)
 						if only_test==False:
-							os.remove(proper_loc+slash+item)s
+							os.remove(proper_loc+slash+item)
 							os.rename(item,proper_loc+slash+item) #Overwriting
 					#!!!!!!!
 					
