@@ -4,10 +4,10 @@
 
 #user defined variables
 ext=".dng" #file extension you want to process, if blank you will be asked to provide this information in the command prompt
-output_file="Algae_filing_report.csv" #Name out the output file that will be generated
-errors="Errors.txt" #Name of the error script that will be output
-only_test=True # True or False. If not set to False, this script will run, but will not create any folders or move any files. The outout file will still be created
-duplicate_type_images=True #If true, the script will generate a folder called 'Duplicated_type_specimens' in the base directory, and copy all valid algae file names that have a *_T* in them
+output_file="Algae_filing_report_Nov20_after_speedboost.csv" #Name out the output file that will be generated
+errors="Errors_Nov20_after_speedboost.txt" #Name of the error script that will be output
+only_test=False # True or False. If not set to False, this script will run, but will not create any folders or move any files. The outout file will still be created
+duplicate_type_images=False #If true, the script will generate a folder called 'Duplicated_type_specimens' in the base directory, and copy all valid algae file names that have a *_T* in them
 
 	
 #Image files MUST have the MICH-A- prefix, or will not be recognized as valid images to file
@@ -29,7 +29,7 @@ if __name__ == "__main__":
 				ext=AU.terminal_input_file_extension_include_dot()
 			if ext[0]!=".":
 				print("User defined extension is invalid, dont forget the '.' Please check on this: "+ext)
-				print("exiting")
+				xprint("exiting")
 				exit(1)
 		
 		
@@ -58,6 +58,7 @@ if __name__ == "__main__":
 			
 			
 			#Iterate through all the algae files to file
+			oslistdir_dot=os.listdir(".")			
 			for fil in Algae_files:	
 				if AU.validate_file_extension_matches(fil,ext)!=True : #If the file extension isn't what we are looking for 
 					err.write("Skipping file: "+fil+" due to incorrect extension\n")
@@ -67,18 +68,20 @@ if __name__ == "__main__":
 					
 					#Three possible outcome at this point. 
 					#1) Folder doesn't exist -> create the folder and move the image there, report
-					if folder not in os.listdir("."):
+					if folder not in oslistdir_dot:
 		#				print("Creating folder "+folder+" and moving the file "+fil+" there")
 						out.write(fil+","+"Yes"+","+"No-Created archive"+","+folder+","+"No\n")
 						if only_test==False:
 							#Filing the image
 							os.mkdir(folder)
+							oslistdir_dot=os.listdir(".") #Needed to account for the new folder in the future
 							os.rename(fil,folder+slash+fil)
 
 							
 					#2) Folder does exist but doesn't contain a copy of an image with the exact same name -> move image to that folder, report
-					elif folder in os.listdir("."):
-						if fil not in os.listdir(folder):
+					elif folder in oslistdir_dot:
+						oslistdir_folder=os.listdir(folder)
+						if fil not in oslistdir_folder:
 		#					print("Moving the file "+fil+" to folder "+folder)
 							out.write(fil+","+"Yes"+","+"Yes"+","+folder+","+"No\n")
 							if only_test==False:
@@ -87,7 +90,7 @@ if __name__ == "__main__":
 								
 								
 					#3) Folder does exist but does contain a copy of an image with the exact same name -> don't move the image, report
-						elif fil in os.listdir(folder):
+						elif fil in oslistdir_folder:
 		#					print("File already in folder, doing nothing")
 							out.write(fil+","+"No"+","+"Yes"+","+folder+","+"Yes\n")
 					else:
