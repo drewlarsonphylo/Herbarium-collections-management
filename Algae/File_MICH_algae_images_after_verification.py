@@ -4,10 +4,11 @@
 
 #user defined variables
 ext=".dng" #file extension you want to process, if blank you will be asked to provide this information in the command prompt
-output_file="Algae_filing_report_Nov20_after_speedboost.csv" #Name out the output file that will be generated
-errors="Errors_Nov20_after_speedboost.txt" #Name of the error script that will be output
+output_file="Algae_filing_report.csv" #Name out the output file that will be generated
+errors="Errors.txt" #Name of the error script that will be output
 only_test=False # True or False. If not set to False, this script will run, but will not create any folders or move any files. The outout file will still be created
 duplicate_type_images=False #If true, the script will generate a folder called 'Duplicated_type_specimens' in the base directory, and copy all valid algae file names that have a *_T* in them
+overwrite_all_copy_files_with_ones_in_base_dir=False #If set to true, Image files will be filed, overwritting those that are currently in those dirs. Be careful with this.
 
 	
 #Image files MUST have the MICH-A- prefix, or will not be recognized as valid images to file
@@ -40,6 +41,10 @@ if __name__ == "__main__":
 			#Writing error messages for all of the invalid files in the folder
 			for item in nonAlgae_files: 
 				ignore=[output_file,errors]
+				archives=AU.find_algae_image_archive_dirs_no_library()
+				for k in archives:
+					ignore.append(k)
+					print(k)
 				if item not in ignore:
 					err.write("Did not file "+item+" because the filename is invalid\n")
 			
@@ -89,10 +94,23 @@ if __name__ == "__main__":
 								os.rename(fil,folder+slash+fil)
 								
 								
-					#3) Folder does exist but does contain a copy of an image with the exact same name -> don't move the image, report
+					#3) Folder does exist but does contain a copy of an image with the exact same name
 						elif fil in oslistdir_folder:
-		#					print("File already in folder, doing nothing")
-							out.write(fil+","+"No"+","+"Yes"+","+folder+","+"Yes\n")
+							#If overwriting is turned on:
+							if overwrite_all_copy_files_with_ones_in_base_dir==True:
+								out.write(fil+","+"Yes"+","+"Yes"+","+folder+","+"Yes\n")
+							if only_test==False:
+								os.remove(folder+slash+fil)
+								os.rename(fil,folder+slash+fil) #Overwriting
+							
+							
+							#If overwriting is not turned on:
+							else:
+			#					print("File already in folder, doing nothing")
+								out.write(fil+","+"No"+","+"Yes"+","+folder+","+"Yes\n")
+							
+							
+				#If none of those are true then something is wrong			
 					else:
 						print("Directory error, exititng")
 						exit(1)
