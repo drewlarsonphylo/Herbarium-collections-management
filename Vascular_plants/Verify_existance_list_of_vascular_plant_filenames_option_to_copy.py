@@ -2,8 +2,12 @@
 #It reports the number of hits and the file paths for each hit
 
 
-#In the Feb4 version, the target list can be either a list of 7 digit barcodes in which case hits will be any file in the archive with that barcode
-#In the Feb4 version, the target list can also be a list of complete file names you are searching for, in which case hits will be only files in archives with that exact name
+#As of February 4, 2020, the target list can be either a list of 7 digit barcodes in which case hits will be any file in the archive with that barcode
+#or the target list can also be a list of complete file names you are searching for, in which case hits will be only files in archives with that exact name
+
+#As of January 19th, 2021, you have the option to print "Date Taken" information for all target hits
+#This feature uses the python library exifread, which you should be able to install with "pip3 install --user exifread"
+
 
 #Run from the base directory with all the image archive folders in it
 
@@ -28,10 +32,16 @@ copy_image_hits=False #If True, all images that hit to one of the target barcode
 
 copy_image_directory="Target_images" #Specify what you want the folder to be called that all the images will be copied to if copy_image_hits is set to True
 
+print_date_taken_for_hits=True #Speify whether you want to use exifread to read photo metadata and print this in addition to path names
+
+
 
 #Importing a function that checks if an image name is legitimate. It takes a string (the file name) and returns True or False
 from vascular_plant_utils import verify_name_legitimate
 
+#Importing exifread if necessary
+if print_date_taken_for_hits==True:
+	from vascular_plant_utils import pull_exif_date
 
 
 ###MAIN FUNCTION###
@@ -117,14 +127,16 @@ if __name__ == "__main__":
 								output_entry=str(basedir+"/"+item+"/"+fil)
 							else: #User wanted the shorted path names
 								output_entry=str(item+"/"+fil)
-							list_of_output_for_target[output_entry]=output_entry #With either path name length, store the entry to count up later
+							dat=pull_exif_date(basedir+"\\"+item+"\\"+fil) #Uses exifread to get image taken metadata
+							list_of_output_for_target[output_entry]=dat #With either path name length, store the entry to count up later
 							
 						elif os_type=="windows":
 							if include_full_filepath_names==True: #Based on user specified value
 								output_entry=str(basedir+"\\"+item+"\\"+fil)
 							else: #User wanted the shorted path names
 								output_entry=str(item+"\\"+fil)
-							list_of_output_for_target[output_entry]=output_entry #With either path name length, store the entry to count up later
+							dat=pull_exif_date(basedir+"\\"+item+"\\"+fil) #Uses exifread to get image taken metadata
+							list_of_output_for_target[output_entry]=dat #With either path name length, store the entry to count up later
 						
 						else:
 							print('You appear to have mis-specified os_type, please specify either "mac" or "windows" and try again')
@@ -134,10 +146,14 @@ if __name__ == "__main__":
 					
 		#If after searching, output lines for each successful search OR there is no match, output that here
 		if match==1:
+			
 			output_line_format=str(x)+","+str("match")+","+str(num_matches)#Initialize the output line to add file paths to
 			for foundTarget in list_of_output_for_target:
-				output_line_format+=","+str(foundTarget)
+				if print_date_taken_for_hits == True:
+					output_line_format+=","+str(foundTarget)+","+str(list_of_output_for_target[foundTarget])  #Uses the results of exifread stored from earlier
 				
+				else:
+					output_line_format+=","+str(foundTarget)
 				
 				
 				#If copy_image_hits is set as True, copy the file into the directory
