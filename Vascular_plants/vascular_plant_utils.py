@@ -80,6 +80,13 @@ def verify_name_legitimate(filename):
 	else: #If the file name doesn't meet any of the criteria, don't flag it as bad
 		return True
 
+def verify_name_legitimate_strict(filename):
+	is_okbarcode=verify_name_legitimate(filename)
+	if "MICH-V-"!=filename[:len("MICH-V-")]:
+		is_okbarcode=False
+		return is_okbarcode
+	
+
 def verify_file_extension(filename, which_extension):
 	#Split the filename based on periods. The last one should be the file extension. If there are no periods, the file fails the test.
 	if "." in filename:

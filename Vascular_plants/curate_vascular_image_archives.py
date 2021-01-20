@@ -10,7 +10,7 @@ output_file="report_curation.csv"
 
 
 #Defining a function that checks if an image name is legitimate. It takes a string (the file name) and returns True or False
-from vascular_plant_utils import verify_name_legitimate
+from vascular_plant_utils import verify_name_legitimate_strict
 from vascular_plant_utils import verify_file_extension
 
 
@@ -54,7 +54,7 @@ if __name__ == "__main__":
 		for direc in archive_dirs:
 			for name in os.listdir(direc):
 	
-				if verify_name_legitimate(name)==False:
+				if verify_name_legitimate_strict(name)==False:
 					statement="File name improperly formatted"
 					print(statement+": "+name+" in directory "+direc+slash)
 					out.write(name+","+direc+slash+","+statement+"\n")
