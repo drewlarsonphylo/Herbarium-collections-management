@@ -127,7 +127,10 @@ if __name__ == "__main__":
 								output_entry=str(basedir+"/"+item+"/"+fil)
 							else: #User wanted the shorted path names
 								output_entry=str(item+"/"+fil)
-							dat=pull_exif_date(basedir+"\\"+item+"\\"+fil) #Uses exifread to get image taken metadata
+							if print_date_taken_for_hits == True:
+								dat=pull_exif_date(basedir+"\\"+item+"\\"+fil) #Uses exifread to get image taken metadata
+							else:
+								dat=""
 							list_of_output_for_target[output_entry]=dat #With either path name length, store the entry to count up later
 							
 						elif os_type=="windows":
@@ -135,8 +138,10 @@ if __name__ == "__main__":
 								output_entry=str(basedir+"\\"+item+"\\"+fil)
 							else: #User wanted the shorted path names
 								output_entry=str(item+"\\"+fil)
-							dat=pull_exif_date(basedir+"\\"+item+"\\"+fil) #Uses exifread to get image taken metadata
-							list_of_output_for_target[output_entry]=dat #With either path name length, store the entry to count up later
+							if print_date_taken_for_hits == True:
+								dat=pull_exif_date(basedir+"\\"+item+"\\"+fil) #Uses exifread to get image taken metadata
+							else:
+								dat=""
 						
 						else:
 							print('You appear to have mis-specified os_type, please specify either "mac" or "windows" and try again')
