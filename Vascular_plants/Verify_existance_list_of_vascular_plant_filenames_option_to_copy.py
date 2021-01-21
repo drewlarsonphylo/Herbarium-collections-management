@@ -32,7 +32,7 @@ copy_image_hits=False #If True, all images that hit to one of the target barcode
 
 copy_image_directory="Target_images" #Specify what you want the folder to be called that all the images will be copied to if copy_image_hits is set to True
 
-print_date_taken_for_hits=True #Speify whether you want to use exifread to read photo metadata and print this in addition to path names
+print_date_taken_for_hits=False #Speify whether you want to use exifread to read photo metadata and print this in addition to path names
 
 
 
