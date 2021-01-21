@@ -142,6 +142,7 @@ if __name__ == "__main__":
 								dat=pull_exif_date(basedir+"\\"+item+"\\"+fil) #Uses exifread to get image taken metadata
 							else:
 								dat=""
+							list_of_output_for_target[output_entry]=dat #With either path name length, store the entry to count up later						
 						
 						else:
 							print('You appear to have mis-specified os_type, please specify either "mac" or "windows" and try again')
