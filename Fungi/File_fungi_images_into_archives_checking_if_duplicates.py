@@ -4,9 +4,9 @@
 #User settings
 only_test=False #When set to true, no files will be moved, when False files will be moved to their filing locations
 enable_reading_metadata=False #will do nothing if overwrite is set to True;  Requires the program Exifread 2.1.2 to be installed on the machine. Allows outputing the image creation date for duplicated files
-image_extension=".jpg" #Include a period for the file extension
+image_extension=".dng" #Include a period for the file extension
 output_file="Record_of_images_filed.tsv"
-overwrite_all_copy_files_with_ones_in_base_dir=True #If set to true, Image files will be filed, overwritting those that are currently in those dirs. Be careful with this.
+overwrite_all_copy_files_with_ones_in_base_dir=False #If set to true, Image files will be filed, overwritting those that are currently in those dirs. Be careful with this.
 
 import os,re,sys
 if enable_reading_metadata==True:
