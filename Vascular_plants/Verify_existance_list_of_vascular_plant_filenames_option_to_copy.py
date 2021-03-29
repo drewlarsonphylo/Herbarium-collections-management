@@ -128,7 +128,7 @@ if __name__ == "__main__":
 							else: #User wanted the shorted path names
 								output_entry=str(item+"/"+fil)
 							if print_date_taken_for_hits == True:
-								dat=pull_exif_date(basedir+"\\"+item+"\\"+fil) #Uses exifread to get image taken metadata
+								dat=pull_exif_date(basedir+"/"+item+"/"+fil) #Uses exifread to get image taken metadata
 							else:
 								dat=""
 							list_of_output_for_target[output_entry]=dat #With either path name length, store the entry to count up later
