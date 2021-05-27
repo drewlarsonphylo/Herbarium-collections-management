@@ -113,7 +113,7 @@ if __name__ == "__main__":
 		for item in Image_dirs:
 			#A match means that this dir needs to be searched for one or more targets
 			for fil in os.listdir(item):
-				file_barcode=re.findall([0-9]+,fil)[0]
+				file_barcode=re.findall("[0-9]+",fil)[0]
 				if int(x) == int(file_barcode):
 					match=1
 					num_matches+=1#Notes that an additional match was found
